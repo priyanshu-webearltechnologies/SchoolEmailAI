@@ -4,7 +4,7 @@ import smtplib
 from email.message import EmailMessage
 import time
 import os
-
+from dotenv import load_dotenv
 
 # ==============================
 # SEND EMAILS FUNCTION
@@ -31,8 +31,10 @@ def send_emails_function(
     # ------------------------------
     # Load environment variables
     # ------------------------------
-    EMAIL_ACCOUNT="priyanshu.webearltechnologies@gmail.com"
-    APP_PASSWORD="leruaimpymrdighh"
+    load_dotenv()  # only needed for local testing
+
+    EMAIL_ACCOUNT = os.getenv("EMAIL_ACCOUNT")
+    APP_PASSWORD = os.getenv("APP_PASSWORD")
     if not EMAIL_ACCOUNT or not APP_PASSWORD:
         print("❌ Missing EMAIL_ACCOUNT or APP_PASSWORD ")
         return

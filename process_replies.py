@@ -6,14 +6,22 @@ import smtplib
 import os
 from intent_detector import detect_intent
 from auto_reply import generate_reply
-
+from dotenv import load_dotenv
 # ==============================
 # PROCESS REPLIES FUNCTION
 # ==============================
-def process_replies_function(
-    email_account: str = "priyanshu.webearltechnologies@gmail.com",
-    app_password: str = "leruaimpymrdighh"
-):
+def process_replies_function():
+    # load environment variables inside the function
+    
+    load_dotenv()  # only for local testing
+
+    EMAIL_ACCOUNT = os.getenv("EMAIL_ACCOUNT")
+    APP_PASSWORD = os.getenv("APP_PASSWORD")
+
+    if not EMAIL_ACCOUNT or not APP_PASSWORD:
+        print("❌ Missing EMAIL_ACCOUNT or APP_PASSWORD")
+        return
+
     """
     Reads unread emails, detects intent, and sends automated HTML replies.
 
@@ -32,7 +40,7 @@ def process_replies_function(
     # ------------------------------
     try:
         smtp = smtplib.SMTP_SSL("smtp.gmail.com", 465)
-        smtp.login(email_account, app_password)
+        smtp.login(EMAIL_ACCOUNT, APP_PASSWORD)
         print("✅ Logged into SMTP for sending replies")
     except Exception as e:
         print(f"❌ SMTP login failed: {e}")
@@ -43,7 +51,7 @@ def process_replies_function(
     # ------------------------------
     try:
         mail = imaplib.IMAP4_SSL("imap.gmail.com")
-        mail.login(email_account, app_password)
+        mail.login(EMAIL_ACCOUNT, APP_PASSWORD)
         mail.select("inbox")
         print("📥 Connected to inbox via IMAP")
     except Exception as e:
@@ -217,7 +225,7 @@ def process_replies_function(
 
             # Create email
             reply = EmailMessage()
-            reply["From"] = email_account
+            reply["From"] = EMAIL_ACCOUNT
             reply["To"] = from_email
             reply["Subject"] = "Re: Fee Communication"
             reply.set_content("Your email client does not support HTML.")
