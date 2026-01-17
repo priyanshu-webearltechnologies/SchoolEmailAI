@@ -12,8 +12,8 @@ from dotenv import load_dotenv
 # ==============================
 def process_replies_function():
     # load environment variables inside the function
-    
-    load_dotenv()  # only for local testing
+
+    load_dotenv("config.env")  # only for local testing
 
     EMAIL_ACCOUNT = os.getenv("EMAIL_ACCOUNT")
     APP_PASSWORD = os.getenv("APP_PASSWORD")

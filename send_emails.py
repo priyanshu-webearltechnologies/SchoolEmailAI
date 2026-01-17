@@ -31,8 +31,7 @@ def send_emails_function(
     # ------------------------------
     # Load environment variables
     # ------------------------------
-    load_dotenv()  # only needed for local testing
-
+    load_dotenv("config.env")  # only needed for local testing
     EMAIL_ACCOUNT = os.getenv("EMAIL_ACCOUNT")
     APP_PASSWORD = os.getenv("APP_PASSWORD")
     if not EMAIL_ACCOUNT or not APP_PASSWORD:
