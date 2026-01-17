@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <body style="margin:0; padding:0; background-color:#f4f6f9; font-family: Arial, Helvetica, sans-serif;">
+
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f6f9; padding:20px;">
+      <tr>
+        <td align="center">
+
+          <table width="600" cellpadding="0" cellspacing="0"
+                 style="background-color:#ffffff; border-radius:8px;
+                        box-shadow:0 0 10px rgba(0,0,0,0.08); overflow:hidden;">
+
+            <!-- ================= HEADER ================= -->
+            <tr>
+              <td style="padding:20px; border-bottom:1px solid #e5e5e5;">
+                <table width="100%">
+                  <tr>
+
+                    <!-- LOGO -->
+                    <td align="left">
+                      <img src="https://www.webearl.com/img/logo.png"
+                           alt="School Logo"
+                           style="max-height:30px;">
+                    </td>
+
+                    <!-- SCHOOL DETAILS -->
+                    <td align="right"
+                        style="font-size:14px; color:#7f8c8d; line-height:1.4;">
+                      <strong>ABC Public School</strong><br>
+                      Accounts Department<br>
+                      Contact: +91 9898989898<br>
+                      Website: https://www.webearl.com
+                    </td>
+
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- ================= TITLE ================= -->
+            <tr>
+              <td align="center" style="padding:20px;">
+                <h1 style="margin:0; font-size:24px; color:#c0392b;">
+                  Fee Reminder – Pending Payment
+                </h1>
+              </td>
+            </tr>
+
+            <!-- ================= BODY ================= -->
+            <tr>
+              <td style="padding:0 30px 20px;
+                         font-size:15px;
+                         color:#2c3e50;
+                         line-height:1.6;">
+
+                <p>Dear Parent of <strong>{{FULL_NAME}}</strong>,</p>
+
+                <p>
+                  This is to inform you that the school fee for the
+                  current academic term is still
+                  <strong style="color:#c0392b;">pending</strong>.
+                </p>
+
+                <!-- DETAILS TABLE -->
+                <table width="100%" cellpadding="8" cellspacing="0"
+                       style="border:1px solid #e0e0e0;
+                              border-radius:6px;
+                              margin:15px 0;">
+
+                  <tr style="background-color:#f9f9f9;">
+                    <td><strong>Student Name</strong></td>
+                    <td>{{FULL_NAME}}</td>
+                  </tr>
+
+                  <tr>
+                    <td><strong>Class</strong></td>
+                    <td>{{CLASS}}</td>
+                  </tr>
+
+                  <tr style="background-color:#f9f9f9;">
+                    <td><strong>Roll No</strong></td>
+                    <td>{{ROLL_NO}}</td>
+                  </tr>
+
+                  <tr>
+                    <td><strong>Fee Amount</strong></td>
+                    <td style="font-size:16px; font-weight:bold; color:#c0392b;">
+                      ₹{{FEE_AMOUNT}}
+                    </td>
+                  </tr>
+
+                  <tr style="background-color:#f9f9f9;">
+                    <td><strong>Due Date</strong></td>
+                    <td style="font-weight:bold; color:#c0392b;">
+                      {{DUE_DATE}}
+                    </td>
+                  </tr>
+
+                </table>
+
+                <p>
+                  Kindly ensure payment is completed on or before
+                  the due date to avoid late charges.
+                </p>
+
+                <p>
+                  If payment has already been made,
+                  please ignore this message.
+                </p>
+
+                <p style="margin-top:20px;">
+                  Regards,<br>
+                  <strong>ABC Public School</strong><br>
+                  Accounts Department
+                </p>
+
+              </td>
+            </tr>
+
+            <!-- ================= FOOTER ================= -->
+            <tr>
+              <td align="center"
+                  style="padding:15px;
+                         font-size:12px;
+                         color:#95a5a6;
+                         background-color:#fafafa;
+                         border-top:1px solid #e5e5e5;">
+                This is an automated email. Please do not reply.
+              </td>
+            </tr>
+
+          </table>
+
+        </td>
+      </tr>
+    </table>
+
+  </body>
+</html>
