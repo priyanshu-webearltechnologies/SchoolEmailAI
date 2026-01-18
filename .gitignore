@@ -6,6 +6,6 @@ config.env
 logs/
 
 #other
-__pycache__/
+__pycache__
 
-build/
+build
