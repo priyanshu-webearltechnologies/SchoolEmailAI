@@ -4,3 +4,8 @@ config.env
 
 # Logs
 logs/
+
+#other
+__pycache__/
+
+build/
