@@ -9,7 +9,7 @@ import os
 # SEND EMAILS FUNCTION
 # ==============================
 def send_emails_function(
-    excel_file: str = "student_demo.xlsx",
+    data: pd.DataFrame,
     template_file: str = "email_template.html",
     delay: int = 5
 ):
@@ -47,13 +47,6 @@ def send_emails_function(
     # ------------------------------
     # Load Excel file
     # ------------------------------
-    try:
-        data = pd.read_excel(excel_file)
-    except Exception as e:
-        print(f"❌ Failed to read Excel file: {e}")
-        return
-
-    print(f"📄 Excel file loaded successfully ({len(data)} emails)")
 
     # ------------------------------
     # Connect to Gmail SMTP

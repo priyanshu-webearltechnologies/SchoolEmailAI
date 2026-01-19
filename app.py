@@ -2,12 +2,19 @@ from fastapi import FastAPI, BackgroundTasks
 from send_emails import send_emails_function
 from process_replies import process_replies_function
 import os
+from fastapi import UploadFile, File
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+import pandas as pd
+import io
 
 app = FastAPI(title="School Email Automation API")
-
+app.mount("/static", StaticFiles(directory="static"), name="static")
+# ===============================
+# HOME ROUTE
 @app.get("/")
 def home():
-    return {"status": "API is running"}
+    return FileResponse("static/index.html")
 
 # ===============================
 # SEND EMAILS API
@@ -76,3 +83,20 @@ def get_status():
     with open(status_file, "r") as f:
         return {"status": f.read().strip()}
 
+@app.post("/upload-excel")
+async def upload_excel(
+    file: UploadFile = File(...),
+    background_tasks: BackgroundTasks = None
+):
+    if not file.filename.endswith(".xlsx"):
+        return {"error": "Only Excel files allowed"}
+
+    contents = await file.read()
+    df = pd.read_excel(io.BytesIO(contents))
+
+    background_tasks.add_task(send_emails_function, df)
+
+    return {
+        "status": "success",
+        "message": "Emails started from uploaded Excel"
+    }
