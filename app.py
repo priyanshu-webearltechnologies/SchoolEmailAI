@@ -21,7 +21,7 @@ app.add_middleware(
 app.mount("/static", StaticFiles(directory="static"), name="static")
 # ===============================
 # HOME ROUTE
-@app.get("/")
+@app.get("/", methods=["GET", "HEAD"])
 def home():
     return FileResponse("static/index.html")
 
