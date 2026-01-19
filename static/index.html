@@ -19,7 +19,13 @@ document.getElementById("uploadForm").onsubmit = async (e) => {
     body: formData
   });
 
-  alert(await res.text());
+  // Parse JSON response instead of text
+  const data = await res.json();
+  if (data.status === "success") {
+    alert(data.message);
+  } else {
+    alert("Error: " + (data.error || "Unknown error"));
+  }
 };
 </script>
 

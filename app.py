@@ -7,20 +7,19 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 import pandas as pd
 import io
-from fastapi.responses import FileResponse
-from fastapi.staticfiles import StaticFiles
 
 app = FastAPI(title="School Email Automation API")
 from fastapi.middleware.cors import CORSMiddleware
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # allow all origins for testing; later you can restrict to your frontend URL
+    allow_origins=["*"],  # allow all origins for testing; later restrict to frontend URL
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
 # ===============================
 # HOME ROUTE
 @app.api_route("/", methods=["GET", "HEAD"])
@@ -28,26 +27,7 @@ def home():
     return FileResponse("static/index.html")
 
 # ===============================
-# SEND EMAILS API
-# ===============================
-@app.post("/send-emails")
-def send_emails(background_tasks: BackgroundTasks):
-    background_tasks.add_task(send_emails_function)
-    return {
-        "status": "success",
-        "message": "Email sending started in background"
-    }
-@app.get("/logs/sent-emails")
-def get_sent_emails():
-    log_file = "logs/sent_emails.log"
-    if not os.path.exists(log_file):
-        return []
-
-    with open(log_file, "r") as f:
-        return [line.strip() for line in f.readlines()]
-# ===============================
 # PROCESS REPLIES API
-# ===============================
 @app.post("/process-replies")
 def process_replies(background_tasks: BackgroundTasks):
     background_tasks.add_task(process_replies_function)
@@ -55,6 +35,7 @@ def process_replies(background_tasks: BackgroundTasks):
         "status": "success",
         "message": "Reply processing started in background"
     }
+
 @app.get("/logs/replies")
 def get_replies():
     log_file = "logs/replies.log"
@@ -63,12 +44,11 @@ def get_replies():
 
     with open(log_file, "r") as f:
         return [line.strip() for line in f.readlines()]
+
 # ===============================
 # RUN BOTH
-# ===============================
 @app.post("/run-all")
 def run_all(background_tasks: BackgroundTasks):
-    # mark system as running
     os.makedirs("logs", exist_ok=True)
     with open("logs/status.txt", "w") as f:
         f.write("running")
@@ -85,6 +65,7 @@ def run_all(background_tasks: BackgroundTasks):
         "status": "success",
         "message": "Full automation started"
     }
+
 @app.get("/status")
 def get_status():
     status_file = "logs/status.txt"
@@ -94,6 +75,8 @@ def get_status():
     with open(status_file, "r") as f:
         return {"status": f.read().strip()}
 
+# ===============================
+# UPLOAD EXCEL & SEND EMAILS
 @app.post("/upload-excel")
 async def upload_excel(
     file: UploadFile = File(...),
@@ -105,9 +88,28 @@ async def upload_excel(
     contents = await file.read()
     df = pd.read_excel(io.BytesIO(contents))
 
+    # Save uploaded Excel as default for future reference
+    os.makedirs("uploads", exist_ok=True)
+    upload_path = os.path.join("uploads", file.filename)
+    with open(upload_path, "wb") as f:
+        f.write(contents)
+    df.to_excel("student_demo.xlsx", index=False)  # default Excel for sending emails
+
+    # Send emails in background
     background_tasks.add_task(send_emails_function, df)
 
     return {
         "status": "success",
         "message": "Emails started from uploaded Excel"
     }
+
+# ===============================
+# SENT EMAIL LOGS
+@app.get("/logs/sent-emails")
+def get_sent_emails():
+    log_file = "logs/sent_emails.log"
+    if not os.path.exists(log_file):
+        return []
+
+    with open(log_file, "r") as f:
+        return [line.strip() for line in f.readlines()]
