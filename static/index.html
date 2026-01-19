@@ -14,7 +14,7 @@ document.getElementById("uploadForm").onsubmit = async (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
 
-  const res = await fetch("/upload-excel/", {
+  const res = await fetch("/upload-excel", {
     method: "POST",
     body: formData
   });

@@ -9,6 +9,15 @@ import pandas as pd
 import io
 
 app = FastAPI(title="School Email Automation API")
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # allow all origins for testing; later you can restrict to your frontend URL
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 # ===============================
 # HOME ROUTE
