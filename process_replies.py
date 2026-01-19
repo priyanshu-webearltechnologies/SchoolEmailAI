@@ -6,15 +6,10 @@ import smtplib
 import os
 from intent_detector import detect_intent
 from auto_reply import generate_reply
-from dotenv import load_dotenv
 # ==============================
 # PROCESS REPLIES FUNCTION
 # ==============================
 def process_replies_function():
-    # load environment variables inside the function
-
-    load_dotenv("config.env")  # only for local testing
-
     EMAIL_ACCOUNT = os.getenv("EMAIL_ACCOUNT")
     APP_PASSWORD = os.getenv("APP_PASSWORD")
 

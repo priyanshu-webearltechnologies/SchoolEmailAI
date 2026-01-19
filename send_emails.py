@@ -4,7 +4,6 @@ import smtplib
 from email.message import EmailMessage
 import time
 import os
-from dotenv import load_dotenv
 
 # ==============================
 # SEND EMAILS FUNCTION
@@ -28,15 +27,12 @@ def send_emails_function(
     # ------------------------------
     os.makedirs("logs", exist_ok=True)
 
-    # ------------------------------
-    # Load environment variables
-    # ------------------------------
-    load_dotenv("config.env")  # only needed for local testing
     EMAIL_ACCOUNT = os.getenv("EMAIL_ACCOUNT")
     APP_PASSWORD = os.getenv("APP_PASSWORD")
+
     if not EMAIL_ACCOUNT or not APP_PASSWORD:
-        print("❌ Missing EMAIL_ACCOUNT or APP_PASSWORD ")
-        return
+        raise RuntimeError("❌ EMAIL_ACCOUNT or APP_PASSWORD not set")
+
 
     # ------------------------------
     # Load HTML template
