@@ -7,6 +7,8 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 import pandas as pd
 import io
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI(title="School Email Automation API")
 from fastapi.middleware.cors import CORSMiddleware
@@ -21,7 +23,7 @@ app.add_middleware(
 app.mount("/static", StaticFiles(directory="static"), name="static")
 # ===============================
 # HOME ROUTE
-@app.get("/", methods=["GET", "HEAD"])
+@app.api_route("/", methods=["GET", "HEAD"])
 def home():
     return FileResponse("static/index.html")
 
